@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "482552608833",
+    "project_id": "mydict-194ff",
+    "storage_bucket": "mydict-194ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482552608833:android:4ddd53035955e85c9e6ec0",
+        "android_client_info": {
+          "package_name": "com.example.wordcards"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxicKjJjw-5-LzeobOm6M1tQA_Sjr2y7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
