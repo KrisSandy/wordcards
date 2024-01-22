@@ -20,7 +20,9 @@ class WordList extends StatelessWidget {
           child: ListTile(
             title: Text(words[index].word),
             subtitle: Text(
-                'Added ${DateTime.now().difference(words[index].createdOn).inDays} days ago'),
+              'Added ${DateTime.now().difference(words[index].createdOn).inDays} days ago',
+              style: const TextStyle(fontSize: 11),
+            ),
             onTap: () {
               Navigator.push(
                 context,
