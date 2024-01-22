@@ -81,22 +81,23 @@ class Definition {
 }
 
 class MyWord {
-  final String id;
   final String word;
-
   int status;
+  final DateTime createdOn;
 
-  MyWord({required this.word, this.status = 0, this.id = ''});
+  MyWord({required this.word, this.status = 0, required this.createdOn});
 
   factory MyWord.fromJson(Map<String, dynamic> json) {
     return MyWord(
       word: json['word'],
       status: json['status'],
+      createdOn: DateTime.parse(json['createdOn']),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'word': word,
         'status': status,
+        'createdOn': createdOn.toIso8601String(),
       };
 }

@@ -185,7 +185,7 @@ class _WordPageState extends State<WordPage> {
 
   Future<Word> _getWord(String word) async {
     _wordFromStore = await _wordStore.getWord(word);
-    _wordFromStore ??= MyWord(word: word);
+    _wordFromStore ??= MyWord(word: word, status: 0, createdOn: DateTime.now());
     return WordService.getWord(word);
   }
 

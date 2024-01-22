@@ -15,8 +15,6 @@ class WordService {
       Word word = wordsRaw.map((word) => Word.fromJson(word)).toList()[0];
       return word;
     } else {
-      print(response.statusCode);
-      print(response.body);
       _logger.severe(
           'Failed to fetch word ${response.statusCode}: ${response.body}');
       throw Exception('Failed to fetch word');

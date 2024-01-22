@@ -15,30 +15,30 @@ class WordStore {
   }
 
   Future<void> add(MyWord word) async {
-    await _wordsRef.add(word);
+    await _wordsRef.doc(word.word).set(word);
   }
 
   Future<void> update(MyWord word) async {
-    await _wordsRef.doc(word.id).update(word.toJson());
+    await _wordsRef.doc(word.word).update(word.toJson());
   }
 
   Stream<QuerySnapshot> getWords(int status) {
     return _wordsRef.where('status', isEqualTo: status).snapshots();
   }
 
-  Future<void> delete(String docId) async {
-    await _wordsRef.doc(docId).delete();
+  Future<void> delete(String word) async {
+    await _wordsRef.doc(word).delete();
   }
 
   Future<MyWord> getWord(String word) async {
     final snapshot = await _wordsRef.where('word', isEqualTo: word).get();
     if (snapshot.docs.isEmpty) {
-      return MyWord(word: word);
+      return MyWord(word: word, status: 0, createdOn: DateTime.now());
     }
     return MyWord(
       word: snapshot.docs.first['word'],
       status: snapshot.docs.first['status'],
-      id: snapshot.docs.first.id,
+      createdOn: DateTime.parse(snapshot.docs.first['createdOn']),
     );
   }
 }
