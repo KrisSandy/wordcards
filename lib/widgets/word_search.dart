@@ -14,6 +14,12 @@ class WordSearch extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              width: 100.0,
+              height: 100.0,
+              child: Image.asset('assets/icon.png'),
+            ),
+            const SizedBox(height: 32.0),
             SearchBar(
               controller: controller,
               hintText: 'Type a word',

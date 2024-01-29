@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wordcards/models/word.dart';
 import 'package:wordcards/services/db.dart';
-import 'package:wordcards/widgets/appbar.dart';
 import 'package:wordcards/widgets/word_list.dart';
 import 'package:wordcards/widgets/word_search.dart';
 
@@ -26,7 +25,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyDictAppBar(),
+      appBar: AppBar(
+        title: Text(getAppBarTitle(_selectedIndex)),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -74,16 +75,29 @@ class _HomeState extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Active',
+            label: 'Learn',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.check),
-            label: 'Done',
+            label: 'Mastered',
           ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  String getAppBarTitle(int index) {
+    switch (index) {
+      case 0:
+        return 'Search';
+      case 1:
+        return 'Learn';
+      case 2:
+        return 'Mastered';
+      default:
+        return '';
+    }
   }
 }

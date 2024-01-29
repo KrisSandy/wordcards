@@ -2,8 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:wordcards/services/db.dart';
 import 'package:wordcards/models/word.dart';
+import 'package:wordcards/services/storage.dart';
 import 'package:wordcards/services/word.dart';
-import 'package:wordcards/widgets/appbar.dart';
 
 class WordPage extends StatefulWidget {
   const WordPage({
@@ -21,6 +21,7 @@ class _WordPageState extends State<WordPage> {
   MyWord? _wordFromStore;
 
   final _wordStore = WordStore();
+  final _wordImageStore = WordImageStore();
 
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
@@ -47,7 +48,9 @@ class _WordPageState extends State<WordPage> {
           );
 
           return Scaffold(
-            appBar: const MyDictAppBar(),
+            appBar: AppBar(
+              title: Text(capitalize(word.word)),
+            ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -82,10 +85,31 @@ class _WordPageState extends State<WordPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
+                          FutureBuilder<String>(
+                            future: WordImageStore().getImageUrl(word.word),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Container();
+                              } else {
+                                return Center(
+                                  child: SizedBox(
+                                    height: 300,
+                                    width: 300,
+                                    child: Image.network(snapshot.data!),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 20),
                           const Text(
                             'Meaning',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -171,7 +195,20 @@ class _WordPageState extends State<WordPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      _buildButtonBasedOnStatus(context, _wordFromStore!),
+                      if (_wordFromStore?.status != 0)
+                        FilledButton(
+                          onPressed: () {
+                            _wordStore.delete(word.word);
+                            Navigator.pop(context);
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                          ),
+                          child: const Text('Delete'),
+                        ),
+                      const SizedBox(width: 10),
+                      _buildAddButtonBasedOnStatus(context, _wordFromStore!),
                     ],
                   ),
                 ],
@@ -189,7 +226,7 @@ class _WordPageState extends State<WordPage> {
     return WordService.getWord(word);
   }
 
-  Widget _buildButtonBasedOnStatus(BuildContext context, MyWord word) {
+  Widget _buildAddButtonBasedOnStatus(BuildContext context, MyWord word) {
     switch (_wordFromStore!.status) {
       case 0:
         return FilledButton.tonal(
