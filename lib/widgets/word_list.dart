@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wordcards/models/word.dart';
 import 'package:wordcards/screens/word.dart';
+import 'package:wordcards/utils/utils.dart';
 
 class WordList extends StatefulWidget {
   const WordList({
@@ -24,7 +25,7 @@ class _WordListState extends State<WordList> {
         return Card(
           child: ListTile(
             title: Text(
-              widget.words[index].word,
+              Utils.capitalizeFirstWord(widget.words[index].word),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black.withOpacity(0.7)),

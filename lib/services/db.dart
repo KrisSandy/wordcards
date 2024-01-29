@@ -7,7 +7,7 @@ class WordStore {
   late final CollectionReference _wordsRef;
 
   WordStore() {
-    _wordsRef = _firestore.collection('words').withConverter<MyWord>(
+    _wordsRef = _firestore.collection('mywords').withConverter<MyWord>(
         fromFirestore: (snapshots, _) => MyWord.fromJson(
               snapshots.data()!,
             ),

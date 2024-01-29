@@ -4,6 +4,7 @@ import 'package:wordcards/services/db.dart';
 import 'package:wordcards/models/word.dart';
 import 'package:wordcards/services/storage.dart';
 import 'package:wordcards/services/word.dart';
+import 'package:wordcards/utils/utils.dart';
 
 class WordPage extends StatefulWidget {
   const WordPage({
@@ -21,9 +22,6 @@ class _WordPageState extends State<WordPage> {
   MyWord? _wordFromStore;
 
   final _wordStore = WordStore();
-  final _wordImageStore = WordImageStore();
-
-  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class _WordPageState extends State<WordPage> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text(capitalize(word.word)),
+              title: Text(Utils.capitalizeFirstWord(word.word)),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -59,7 +57,7 @@ class _WordPageState extends State<WordPage> {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          capitalize(word.word),
+                          Utils.capitalizeFirstWord(word.word),
                           style: const TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -183,11 +181,11 @@ class _WordPageState extends State<WordPage> {
                                       ],
                                     ),
                                   );
-                                }).toList(),
+                                }),
                                 const SizedBox(height: 10),
                               ],
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     ),

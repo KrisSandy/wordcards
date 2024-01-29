@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wordcards/models/word.dart';
 import 'package:wordcards/services/db.dart';
+import 'package:wordcards/widgets/word_grid.dart';
 import 'package:wordcards/widgets/word_list.dart';
 import 'package:wordcards/widgets/word_search.dart';
 
@@ -55,7 +56,7 @@ class _HomeState extends State<Home> {
                       List<MyWord> words = snapshot.data!.docs
                           .map((doc) => doc.data() as MyWord)
                           .toList();
-                      return WordList(words: words);
+                      return WordGrid(words: words);
                     } else {
                       return const CircularProgressIndicator();
                     }
